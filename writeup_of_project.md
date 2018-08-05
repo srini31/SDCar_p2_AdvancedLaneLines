@@ -182,7 +182,7 @@ Solutions to the issues in the first submission:
 3) The leftx and rightx arrays are also averages for eight frames and hence the polynomial is also averaged.
 2) and 3) almost eliminated the issue from the earlier submission where the lane was moving inward near the bridge and outward when the black car was overtaking the self driving car as highlighted in the review.
 
-#----------------------------------------------------------
+
 For the challenge video, there are some lines in the center of the road which are detected and followed by the algorithm. I need to correct this by looking at the binary transformation. The current binary image combination is working but I need to adjust the source points array for this video as the lane positions are different compared to the project video. 
 
 For the harder challenge video, I need to reduce the region of interest to better follow the steep curves. Though the lanes seem to be clearly marked, the lines seem to jump on to the railing on the side of the road. May be I need to use a margin to detect the lanes well instead of going out of the road.
