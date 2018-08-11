@@ -169,18 +169,34 @@ The code performs well on the project video but the lanes go off the road someti
 
 Since the first submission, I have made some updates to overcome some of the problems 
 
-Issues documented in the first submission:
+
+Updates made in the current submission
+
+First Submission: The following issues were documented
 1) I did not implement averaging of centers of pixels during convolution. Because of this when there are dotted lanes or missing lanes, the pixels are shifting to the left. By solving this I can make the lanes follow the road more smoothly.
 
 2) Sometimes there is a reflection of the lane line on the side of the car that is overtaking the self driving car. This reflected lane is detected and causes wobble of the lane lines.
 
 3) I am not sure how to save the previous lane detection when the video clip calls the `advanced_lane_find` in a new frame. May be this has to be done using a pickle file to load the previous position. I am also not sure about the ratios for converting the pixel size to meters.
 
-Solutions to the issues in the first submission:
+Second submission: The following solutions were implemented
 1) updated , the left and right start points of the lanes are averaged and if the lane starting points drift more than 25 points, the average value is used
 2) The window centroids are averaged for four frames (36 points) and the average centroids are returned from the `sliding_window_conv` class. This reduces the lane drift and is also helpful when some pixels are not detected in some frames. 
 3) The leftx and rightx arrays are also averages for eight frames and hence the polynomial is also averaged.
 2) and 3) almost eliminated the issue from the earlier submission where the lane was moving inward near the bridge and outward when the black car was overtaking the self driving car as highlighted in the review.
+
+
+Third submission: The following solutions were implemented
+From my second submission, the issue to correct was that the right lane marker was drifting to the left at the top because the convolution code was marking the lane windows to the left when no white lane pixels were found. To overcome that I made the following updates: 
+1)Lane drift at the top of the polynomial: In case no white lane pixel was found for the sub-frame layer (frame is divided vertically into 9 layers), the lane window center should be marked at the average center position of the lane. This center position is calculated from the conv_signal. I am averaging the value of this signal for both lanes in all the sub-layers of a frame
+It was initialized with 50 which is half of the search area ranging from (offset-margin) to (offset+margin)
+
+
+2) Window lane centers: I averaged the window lane starting points for all frames and if the lane in a frame drifts more than 35 pixels, the left and right lane centers are set to the average values
+
+3) Window centroids: Normally for my window_height parameter, 9 centroids are calculated for a frame. I am using an average of 36 centroids which is average of 4 frames
+ 
+4) Polynomial: I am using points from 32 frames to average the polynomial
 
 
 For the challenge video, there are some lines in the center of the road which are detected and followed by the algorithm. I need to correct this by looking at the binary transformation. The current binary image combination is working but I need to adjust the source points array for this video as the lane positions are different compared to the project video. 
@@ -188,8 +204,6 @@ For the challenge video, there are some lines in the center of the road which ar
 For the harder challenge video, I need to reduce the region of interest to better follow the steep curves. Though the lanes seem to be clearly marked, the lines seem to jump on to the railing on the side of the road. May be I need to use a margin to detect the lanes well instead of going out of the road.
 
 Most of these issues make me wonder about the real challenges of the self driving car. Things can be hard when there are two dotted lanes and the perspective may not be able to figure the direction. The window height may have to reduced, centers averaged, and make sure that the two detected polynomials are parallel to each other, more smoothing has to be applied in the convolution program. From the harder challenge video, bright sunlight, shiny surfaces are more prominent than the lanes and the steep curves cause the perspective image to veer on to the side of the image whereas the sliding windows are marching upwards in the convolution program. For these cases, the margin of search window has to be wider.
-
-
 
 
 
