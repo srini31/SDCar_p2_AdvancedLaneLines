@@ -1,7 +1,7 @@
 ## Advanced Lane Finding Project Writeup
 
+In this project, the goal is to write a software pipeline to identify the lane boundaries in a video and these are listed below:
 
-The goals / steps of this project are the following:
 
 * Compute the camera calibration matrix and distortion coefficients given a set of chessboard images.
 * Apply a distortion correction to raw images.
@@ -11,6 +11,15 @@ The goals / steps of this project are the following:
 * Determine the curvature of the lane and vehicle position with respect to center.
 * Warp the detected lane boundaries back onto the original image.
 * Output visual display of the lane boundaries and numerical estimation of lane curvature and vehicle position.
+
+The images for camera calibration are stored in the folder called `camera_cal`.  The images in `test_images` are for testing the pipeline on single frames. To extract more test images from the videos, we can use an image writing method like `cv2.imwrite()`, i.e.,  read the video in frame by frame  and for frames to be saved for later are written to an image file.  
+
+Examples of the output from each stage of the pipeline are saved in the folder `output_images`, and a description of each image is provided in the writeup. The pipeline works on the video `project_video.mp4`.  
+
+The `challenge_video.mp4` video is an extra (and optional) challenge to test your pipeline under somewhat trickier conditions.  The `harder_challenge.mp4` video is another optional challenge and is brutal!
+
+A more ambitious option that was suggested was to go out and take video of my own, calibrate the camera and show how to implement this project from scratch!
+
 
 [//]: # (Image References)
 
